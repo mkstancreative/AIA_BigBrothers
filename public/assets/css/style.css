@@ -1,0 +1,391 @@
+@import url("https://cdn.jsdelivr.net/fontsource/fonts/jetbrains-mono:vf@latest/latin-wght-normal.woff2");
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    scroll-behavior: smooth;
+    font-family: "JetBrains Mono Variable", sans-serif;
+    font-optical-sizing: auto;
+}
+ol,
+ul {
+    padding-left: 0;
+}
+
+:root {
+    --Main1AshBgColor: #e6e6e6;
+    --Main2AshBgColor: #f4f6f9;
+    --MainWhite: #ffff;
+    --MainBlack: #000;
+    --blackShadeColor: #48525a;
+    --MainYellowColor: #ffd333;
+}
+
+/* REGISTER ADMIN PAGE */
+.container_admin {
+    background-image: url("../images/gb3.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* border: 1px solid red; */
+}
+
+.admin_block {
+    border-radius: 20px !important;
+    /* border: 2px solid green; */
+}
+.admin_logo {
+    width: 100px;
+    height: 100px;
+    margin: 1rem auto;
+    background-color: var(--MainWhite);
+    /* border: 1px solid red; */
+}
+
+.admin_logo > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.dash-wrapper {
+    /* border: 1px solid green; */
+    /* padding: 5px; */
+    /* justify-content: space-between; */
+    display: flex;
+    align-items: center;
+}
+
+.dash-wrapper > div {
+    min-height: 800px;
+}
+
+/* SIDEBAR STARTS HERE  */
+.navbrand {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--MainBlack);
+    height: 200px;
+}
+
+.navbrand a {
+    display: block;
+    width: 100px;
+    height: 100px;
+}
+
+.navbrand p {
+    color: var(--MainWhite);
+}
+
+.navbrand a > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.sidebar-text {
+    padding: 10px;
+    font-size: 12px;
+    background-color: var(--blackShadeColor);
+    color: var(--MainWhite);
+}
+
+.layoutSideBar1 {
+    padding: 5px;
+    height: 100vh;
+    width: 300px;
+    background-color: var(--MainBlack);
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    scrollbar-width: scroll;
+    transition: transform 0.3s ease-in-out;
+    /* border: 1px solid red; */
+}
+
+.layoutSideBar1.active {
+    transform: translateX(-100%);
+}
+
+.sidebar-menu-items {
+    background-color: var(--MainBlack);
+}
+
+.sidebar-menu-items i {
+    color: var(--MainYellowColor);
+}
+.sidebar-menu-items > ul > li {
+    margin-bottom: 5px;
+    list-style-type: none;
+    background-color: var(--MainBlack);
+    border-bottom: 1px solid var(--blackShadeColor);
+    /* border: 1px solid green; */
+    cursor: pointer;
+}
+.sidebar-menu-items > ul > li > a {
+    text-decoration: none;
+    color: var(--MainWhite);
+    display: block;
+    font-size: 14px;
+    padding: 10px 5px;
+    /* border: 1px solid red; */
+}
+
+.has-dropdown {
+    position: relative;
+}
+
+.has-dropdown .arrow-icon {
+    position: absolute;
+    right: 0;
+    transition: transform 0.3s ease-in-out;
+}
+
+.sidebar-menu-dropdown {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    border-radius: 10px;
+    list-style-type: none;
+    /* border: 1px solid red; */
+    padding-left: 25px;
+    background-color: var(--blackShadeColor);
+    margin-top: 0;
+    transition: max-height 0.3s ease, opacity 0.3s ease,
+        margin-top 0.3s ease-in-out;
+}
+
+.sidebar-menu-dropdown > li {
+    /* border: 1px solid green; */
+    padding: 0 !important;
+}
+
+.sidebar-menu-dropdown > li > a {
+    text-decoration: none;
+    color: var(--MainWhite);
+    font-size: 14px;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    /* border: 1px solid red; */
+}
+
+.sidebar-menu-dropdown > li > a:hover {
+    background-color: var(--MainBlack) !important;
+    padding: 0px 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: none;
+    border-bottom-right-radius: none;
+    transition: background-color 0.3s ease-in-out, padding 0.3s ease-in-out,
+        border-radius 0.3s ease-in-out;
+}
+
+.sidebar-menu.has-dropdown.open .sidebar-menu-dropdown {
+    max-height: 500px;
+    opacity: 1;
+    margin-top: 10px;
+}
+
+.sidebar-menu.has-dropdown.open .arrow-icon {
+    transform: rotate(-90deg);
+}
+
+.sidebar-menu-dropdown li {
+    margin: 5px 0;
+    padding: 5px;
+    background-color: transparent !important;
+}
+
+.layoutSideBar2 {
+    margin-left: 300px;
+    min-height: 800px;
+    /* border: 10px solid red; */
+    width: 80%;
+    background-color: var(--Main1AshBgColor);
+    transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
+}
+
+.layoutSideBar2.active {
+    margin-left: 0;
+    width: 100%;
+}
+
+.layoutTop {
+    position: sticky;
+    z-index: 1000;
+    top: 0;
+    background-color: var(--MainYellowColor);
+}
+
+.top_nav {
+    width: 100%;
+    padding: 20px 30px;
+    border: 1px solid #000;
+    box-shadow: 0px 3px 2px grey;
+}
+
+.top_nav > span {
+    font-size: 25px;
+    cursor: pointer;
+    font-weight: bolder;
+}
+
+.top_nav > a {
+    display: inline-block;
+    margin-left: 1rem;
+    text-decoration: none;
+    font-weight: bolder;
+    font-size: 25px;
+    color: var(--MainBlack);
+}
+
+.bread_crumb {
+    margin: 1rem 0;
+    background-color: var(--MainBlack);
+    padding: 2px 30px;
+}
+
+.bread_crumb > a {
+    color: var(--MainYellowColor);
+    text-decoration: none;
+}
+
+.bread_crumb > span {
+    color: var(--MainYellowColor);
+}
+
+/* MAIN PANEL STARTS HERE */
+.main-panel {
+    /* border: 10px solid green; */
+    padding: 20px;
+    height: 150vh;
+    background-color: transparent;
+}
+
+.dash_card_container > div {
+    height: 200px;
+    background-color: var(--MainBlack);
+    border-radius: 10px;
+}
+
+.dash_card_block {
+    color: var(--MainWhite);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+    /* border: 1px solid green; */
+}
+
+.dash_card_block > div:first-of-type {
+    font-size: 30px;
+    background-color: var(--MainYellowColor);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    color: var(--blackShadeColor);
+    text-align: center;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.dash_card_block > div:last-of-type {
+    text-align: center;
+}
+
+.marks-inputs {
+    width: 50px;
+    /* border: 1px solid green; */
+}
+
+.marks-inputs > input {
+    width: 100%;
+    border-radius: 10px;
+    /* border: none; */
+    outline: none;
+    text-align: center;
+}
+
+.group-header {
+    position: relative;
+}
+.group-header::before {
+    content: "Subject";
+    position: absolute;
+    top: -1.5rem;
+    left: 0;
+    right: 0;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Back to DashBoard  */
+.back-to-dashboard {
+    text-decoration: none;
+    padding: 2px;
+    /* background-color: var(--MainYellowColor); */
+    color: var(--MainBlack);
+    border-radius: 10px;
+    border-bottom: 5px solid var(--MainYellowColor);
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+
+/* Hello Image */
+.hello-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    /* border: 1px solid red; */
+    transition: all 0.3s ease-in-out;
+}
+.hello-block {
+    width: 150px;
+    /* border: 1px solid green; */
+    height: 50px;
+}
+.hello-block > img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.hello-name {
+    align-self: flex-end;
+    margin-bottom: 0px;
+    font-style: italic;
+    font-weight: bolder;
+}
+
+footer {
+    padding: 5px 15px;
+    background-color: var(--MainBlack);
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+footer > div {
+    margin-left: 1rem;
+}
+
+footer > div p {
+    padding-bottom: 0;
+    margin: 0;
+    font-size: 12px;
+    color: var(--MainWhite) !important;
+}
+footer > div a {
+    font-weight: 100;
+    color: var(--MainYellowColor);
+    text-decoration: none;
+}
