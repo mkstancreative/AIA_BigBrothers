@@ -22,7 +22,7 @@
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
                 tabindex="0">
-                <div class="col-md-12 bg-white p-3">
+                <div class="col-md-12 bg-white p-3 overflow-auto">
                     <h5 class="pb-3">All Members</h5>
                     <table class="table table-striped" class="tableContainer">
                         <thead>
@@ -47,7 +47,7 @@
                                     <td>{{ $member->status }}</td>
                                     <td>
                                         <a href="{{ route('members.show', $member->id) }}"
-                                            class="badge bg-dark fs-6 edit-btn">
+                                            class="badge bg-dark fs-6 edit-btn" data-id={{ $member->id }}>
                                             <i class="ri-edit-box-line"></i>
                                         </a>
                                         <span class="badge bg-danger fs-6 delete-btn" data-id="{{ $member->id }}">
@@ -1134,6 +1134,8 @@
                         `;
                 tbody.appendChild(row);
             });
+
+
 
             handleDeleteButtons('#tableBody', '/members', 'tableRow-', 'Member Deleted Successfully');
         });

@@ -53,7 +53,7 @@ function handleFormSubmit(
     url,
     method = "POST",
     successMessage = "Saved successfully!",
-    onSuccess = null // <-- optional callback
+    onSuccess = null
 ) {
     const form = document.querySelector(formSelector);
     if (!form) return console.error(`Form not found: ${formSelector}`);
@@ -63,6 +63,20 @@ function handleFormSubmit(
 
         const formData = new FormData(form);
 
+        // Optional: disable submit button
+        const submitBtn = form.querySelector('[type="submit"]');
+        if (submitBtn) submitBtn.disabled = true;
+
+        // Show loading Swal
+        Swal.fire({
+            title: "Please wait...",
+            html: "Submitting your request...",
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+        });
+
         fetch(url, {
             method: method.toUpperCase(),
             headers: {
@@ -70,122 +84,76 @@ function handleFormSubmit(
                 Accept: "application/json",
             },
             body: formData,
-        }).then(async (res) => {
-            const contentType = res.headers.get("Content-Type");
-            const isJson =
-                contentType && contentType.includes("application/json");
-            const data = isJson ? await res.json() : null;
+        })
+            .then(async (res) => {
+                const contentType = res.headers.get("Content-Type");
+                const isJson =
+                    contentType && contentType.includes("application/json");
+                const data = isJson ? await res.json() : null;
 
-            if (res.ok) {
-                toastr.success(successMessage);
-                form.reset();
-                window.location.reload();
+                // Re-enable submit button
+                if (submitBtn) submitBtn.disabled = false;
 
-                if (typeof onSuccess === "function") {
-                    onSuccess(data?.data);
-                }
-            } else if (res.status === 422 && data?.errors) {
-                Object.entries(data.errors).forEach(([field, messages]) => {
-                    const input = form.querySelector(`[name="${field}"]`);
-                    if (input) {
-                        input.classList.add("is-invalid");
-
-                        const feedback = document.createElement("div");
-                        feedback.className = "invalid-feedback";
-                        feedback.innerText = messages[0];
-                        input.parentNode.appendChild(feedback);
-                    }
-
-                    messages.forEach((msg) => toastr.error(msg));
-                });
-            } else {
-                toastr.error(
-                    data?.message ||
-                        "Something went wrong. Check form and try again."
+                // Clear previous errors
+                form.querySelectorAll(".is-invalid").forEach((el) =>
+                    el.classList.remove("is-invalid")
                 );
-                console.error("Validation or server error:", data);
-            }
-        });
-    });
-}
+                form.querySelectorAll(".invalid-feedback").forEach((el) =>
+                    el.remove()
+                );
 
-function capitalizeFirst(str) {
-    return str ? str.charAt(0).toUpperCase() + str.slice(1).toLowerCase() : "";
-}
+                if (res.ok) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Success",
+                        text: successMessage,
+                    });
 
-function formatCase(str) {
-    return str
-        ? str
-              .toLowerCase()
-              .split(" ")
-              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-              .join(" ")
-        : "";
-}
+                    form.reset();
 
-// Fetch FormData On The Form
-function populateFormFields(
-    containerSelector,
-    fetchUrlBase,
-    formSelector,
-    inputPrefix = "edit-"
-) {
-    const container = document.querySelector(containerSelector);
-    if (!container) return;
-
-    container.addEventListener("click", function (e) {
-        const editBtn = e.target.closest(".edit-btn");
-        if (!editBtn) return;
-
-        const id = editBtn.dataset.id;
-        if (!id) return;
-
-        console.log(`${fetchUrlBase}/${id}`);
-
-        fetch(`${fetchUrlBase}/${id}`)
-            .then((res) => res.json())
-            .then((data) => {
-                const form = document.querySelector(formSelector);
-                if (!form) return;
-
-                form.dataset.id = id;
-
-                for (const key in data) {
-                    // Handle checkboxes with array values
-                    if (Array.isArray(data[key])) {
-                        form.querySelectorAll(`input[name="${key}[]"]`).forEach(
-                            (checkbox) => {
-                                checkbox.checked = data[key].includes(
-                                    checkbox.value
-                                );
-                            }
-                        );
-                        continue;
+                    if (typeof onSuccess === "function") {
+                        onSuccess(data?.data);
+                    } else {
+                        window.location.reload(); // Default reload
                     }
+                } else if (res.status === 422 && data?.errors) {
+                    // Show validation errors
+                    Object.entries(data.errors).forEach(([field, messages]) => {
+                        const input = form.querySelector(`[name="${field}"]`);
+                        if (input) {
+                            input.classList.add("is-invalid");
 
-                    const input = form.querySelector(`#${inputPrefix}${key}`);
-                    if (input) {
-                        let value = data[key];
-
-                        // Handle select fields properly
-                        if (input.tagName === "SELECT") {
-                            [...input.options].forEach((opt) => {
-                                opt.selected = opt.value === value;
-                            });
-                        } else if (
-                            input.type === "checkbox" ||
-                            input.type === "radio"
-                        ) {
-                            input.checked = input.value == value;
-                        } else {
-                            input.value = value;
+                            const feedback = document.createElement("div");
+                            feedback.className = "invalid-feedback";
+                            feedback.innerText = messages[0];
+                            input.parentNode.appendChild(feedback);
                         }
-                    }
+                    });
+
+                    Swal.fire({
+                        icon: "error",
+                        title: "Validation Error",
+                        html: Object.values(data.errors).flat().join("<br>"),
+                    });
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text:
+                            data?.message ||
+                            "Something went wrong. Please try again.",
+                    });
+                    console.error("Server error:", data);
                 }
             })
-            .catch((err) => {
-                console.error("Failed to fetch data:", err);
-                toastr.error("Could not load form data.");
+            .catch((error) => {
+                if (submitBtn) submitBtn.disabled = false;
+                Swal.fire({
+                    icon: "error",
+                    title: "Network Error",
+                    text: "Failed to submit form. Check your connection.",
+                });
+                console.error("Network or fetch error:", error);
             });
     });
 }
@@ -205,7 +173,11 @@ function handleUpdateFormSubmit(
 
         const id = form.dataset.id;
         if (!id) {
-            toastr.error("Missing data ID.");
+            Swal.fire({
+                icon: "error",
+                title: "Missing ID",
+                text: "No record ID found for update.",
+            });
             return;
         }
 
@@ -217,6 +189,19 @@ function handleUpdateFormSubmit(
 
         const formData = new FormData(form);
         formData.append("_method", "PUT");
+
+        const submitBtn = form.querySelector('[type="submit"]');
+        if (submitBtn) submitBtn.disabled = true;
+
+        // Show loading alert
+        Swal.fire({
+            title: "Please wait...",
+            html: "Updating your data...",
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+        });
 
         fetch(`${updateUrlBase}/${id}`, {
             method: "POST",
@@ -231,15 +216,22 @@ function handleUpdateFormSubmit(
                 const isJson = contentType.includes("application/json");
                 const data = isJson ? await res.json() : null;
 
-                if (res.ok && data?.status === "success") {
-                    toastr.success(successMessage);
-                    form.reset();
+                if (submitBtn) submitBtn.disabled = false;
+
+                if (
+                    res.ok &&
+                    (data?.status === true || data?.status === "success")
+                ) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Success",
+                        text: successMessage,
+                    });
 
                     if (typeof onSuccess === "function") {
-                        onSuccess(data.data);
+                        onSuccess(data?.data);
                     }
                 } else if (res.status === 422 && data?.errors) {
-                    // Handle Laravel validation errors
                     Object.entries(data.errors).forEach(([field, messages]) => {
                         const input = form.querySelector(`[name="${field}"]`);
                         if (input) {
@@ -252,17 +244,30 @@ function handleUpdateFormSubmit(
                                 .closest(".input-group, .form-group, div")
                                 .appendChild(feedback);
                         }
+                    });
 
-                        messages.forEach((msg) => toastr.error(msg));
+                    Swal.fire({
+                        icon: "error",
+                        title: "Validation Error",
+                        html: Object.values(data.errors).flat().join("<br>"),
                     });
                 } else {
-                    toastr.error(data?.message || "Update failed.");
+                    Swal.fire({
+                        icon: "error",
+                        title: "Update Failed",
+                        text: data?.message || "Unexpected error occurred.",
+                    });
                     console.error("Unexpected server response:", data);
                 }
             })
             .catch((err) => {
-                console.error("Update failed:", err);
-                toastr.error("Network or server error.");
+                if (submitBtn) submitBtn.disabled = false;
+                Swal.fire({
+                    icon: "error",
+                    title: "Network Error",
+                    text: "Something went wrong while submitting the form.",
+                });
+                console.error("Network or fetch error:", err);
             });
     });
 }
@@ -286,32 +291,50 @@ function handleDeleteButtons(
         if (!deleteBtn) return;
 
         const id = deleteBtn.dataset.id;
-        if (!id) return toastr.error("Missing ID for deletion.");
-
-        if (!confirm("Are you sure you want to delete this class?")) return;
-
-        fetch(`${urlBase}/${id}`, {
-            method: "DELETE",
-            headers: {
-                "X-CSRF-TOKEN":
-                    document.querySelector('input[name="_token"]')?.value || "",
-                Accept: "application/json",
-            },
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                toastr.success(successMessage);
-                const row = document.getElementById(`${rowPrefix}${id}`);
-                if (row) row.remove();
-
-                if (typeof onDeleted === "function") {
-                    onDeleted();
-                }
-            })
-            .catch((err) => {
-                console.error("Delete failed:", err);
-                toastr.error("Error deleting class.");
+        if (!id) {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "Missing ID for deletion.",
             });
+            return;
+        }
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "This action cannot be undone!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+            if (!result.isConfirmed) return;
+
+            fetch(`${urlBase}/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "X-CSRF-TOKEN":
+                        document.querySelector('input[name="_token"]')?.value ||
+                        "",
+                    Accept: "application/json",
+                },
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    Swal.fire("Deleted!", successMessage, "success");
+                    const row = document.getElementById(`${rowPrefix}${id}`);
+                    if (row) row.remove();
+
+                    if (typeof onDeleted === "function") {
+                        onDeleted();
+                    }
+                })
+                .catch((err) => {
+                    console.error("Delete failed:", err);
+                    Swal.fire("Error!", "Error deleting item.", "error");
+                });
+        });
     });
 }
 

@@ -16,19 +16,24 @@ Route::middleware(['guest:admin'])->group(function(){
         Route::get('/login', 'createLogin')->name('login');
         Route::post('/login', 'storeAdmin')->name('admin.store');
     });
-    Route::controller(UserController::class)->name('user.')->group(function(){
+    Route::controller(UserController::class)->name('user.')
+    ->group(function(){
         Route::get('/index', 'index')->name('index');
         Route::get('/about', 'indexAbout')->name('about');
         Route::get('/contact', 'indexContact')->name('contact');
         Route::get('/register', 'indexRegister')->name('register');
         Route::get('/become-a-member', 'createRegister')->name('create');
         Route::post('/become-a-member', 'storeRegister')->name('store');
+        Route::get('/blog/{id}', 'showBlog')->name('show');
     });
+
+    
 
 });
 Route::middleware(['auth:admin'])->group(function () {
 
-    Route::controller(AuthController::class)->group(function () {
+    Route::controller(AuthController::class)
+    ->group(function () {
         Route::post('/logout', 'logout')->name('logout');
         Route::get('/home', 'createHome')->name('dashboard');
         Route::get('/change-password', 'createChangePassword')->name('change-password');
@@ -63,12 +68,12 @@ Route::middleware(['auth:admin'])->group(function () {
     ->name('blogs.')
     ->group(function () {
             Route::get('/', 'createBlog')->name('index');
-            Route::post('/', 'storeMBlog')->name('store');
+            Route::post('/', 'storeBlog')->name('store');
             Route::get('/{id}', 'showBlog')->name('show');
             Route::put('/{id}', 'updateBlog')->name('update');
             Route::delete('/{id}', 'destroyBlog')->name('delete');
         });
+
+
+   
 });
-
-
-

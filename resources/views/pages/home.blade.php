@@ -36,8 +36,8 @@
                 <i class="ri-book-open-fill"></i>
             </div>
             <div>
-                <h3>0</h3>
-                <p>Awaiting Events</p>
+                <h3>{{ $blog }}</h3>
+                <p>Total Post</p>
             </div>
         </div>
     </div>

@@ -10,26 +10,26 @@
     <!-- Page Title -->
     <title>AIA Big Brothers Social Club</title>
     <!-- Favicon Icon -->
-    <link rel="shortcut icon" type="image/x-icon" href="{{asset('assets3/images/favicon.png')}}" />
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets3/images/favicon.png') }}" />
     <!-- Google Fonts Css-->
     <link rel="preconnect" href="https://fonts.googleapis.com/" />
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
     <link href="https://cdn.jsdelivr.net/fontsource/fonts/fira-code:vf@latest/latin-wght-normal.woff2"
         rel="stylesheet" />
     <!-- Bootstrap Css -->
-    <link href="assets2/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+    <link href="{{ asset('assets2/css/bootstrap.min.css') }}" rel="stylesheet" media="screen" />
     <!-- SlickNav Css -->
-    <link href="assets2/css/slicknav.min.css" rel="stylesheet" />
+    <link href="{{ asset('assets2/css/slicknav.min.css') }}" rel="stylesheet" />
     <!-- Swiper Css -->
     <link rel="stylesheet" href="assets2/css/swiper-bundle.min.css" />
     <!-- Font Awesome Icon Css-->
-    <link href="assets2/css/all.css" rel="stylesheet" media="screen" />
+    <link href="{{ asset('assets2/css/all.css') }}" rel="stylesheet" media="screen" />
     <!-- Animated Css -->
     <link href="assets2/css/animate.css" rel="stylesheet" />
     <!-- Magnific Popup Core Css File -->
-    <link rel="stylesheet" href="assets2/css/magnific-popup.css" />
-    <link rel="stylesheet" href="assets2/css/plyr.css" />
-    <link href="assets2/css/custom.css" rel="stylesheet" media="screen" />
+    <link rel="stylesheet" href="{{ asset('assets2/css/magnific-popup.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets2/css/plyr.css') }}" />
+    <link href="{{ asset('assets2/css/custom.css') }}" rel="stylesheet" media="screen" />
 </head>
 
 <body>
@@ -84,7 +84,7 @@
                 <div class="col-lg-12">
                     <!-- Page Header Box Start -->
                     <div class="page-header-box">
-                        <h1 class="text-anime-style-2">Contact Us</h1>
+                        <h1 class="text-anime-style-2">Blog</h1>
                     </div>
                     <!-- Page Header Box End -->
                 </div>
@@ -93,139 +93,50 @@
     </div>
     <!-- Page Header End -->
 
-    <!-- Page Contact Us Start -->
-    <div class="page-contact-us">
+    <div class="page-single-post">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <!-- Contact Information Start -->
-                    <div class="contact-information">
-                        <!-- Contact Information Title Start -->
-                        <div class="section-title">
-                            <h3 class="wow fadeInUp">contact us</h3>
-                            <h2 class="text-anime-style-2" data-cursor="-opaque">
-                                Reach Out to Our <span> Support</span>
-                            </h2>
-                            <p class="wow fadeInUp" data-wow-delay="0.25s">
-                                Contact us for support, information, or to get involved. We're
-                                here to help and welcome you to our community.
-                            </p>
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <!-- Post Single Content Start -->
+                    <div class="post-content">
+                        <!-- Post Featured Image Start -->
+                        <div class="post-image border">
+                            <figure class="image-anime reveal">
+                                <img src="images/post-1.jpg" alt="">
+                            </figure>
                         </div>
-                        <!-- Contact Information Title End -->
+                        <!-- Post Featured Image Start -->
+                        <!-- Post Entry Start -->
+                        <div class="post-entry">
+                            <h2 class="text-anime-style-3 mb-4" data-cursor="-opaque">Christmas Eve Candlelight Service  Celebrate with </h2>
 
-                        <!-- Contact Information List Start -->
-                        <div class="contact-info-list">
-                            <!-- Contact Info Item Start -->
-                            <div class="contact-info-item wow fadeInUp" data-wow-delay="0.25s">
-                                <!-- Icon Box Start -->
-                                <div class="icon-box">
-                                    <img src="assets2/images/icon-phone.svg" alt="" />
-                                </div>
-                                <!-- Icon Box End -->
-
-                                <!-- Contact Info Content Start -->
-                                <div class="contact-info-content">
-                                    <p>give us a call</p>
-                                    <h6>+234 803-571-6186</h6>
-                                    <h6>+234 803-344-0536</h6>
-                                </div>
-                                <!-- Contact Info Content End -->
-                            </div>
-                            <!-- Contact Info Item End -->
-
-                            <!-- Contact Info Item Start -->
-                            <div class="contact-info-item wow fadeInUp" data-wow-delay="0.5s">
-                                <!-- Icon Box Start -->
-                                <div class="icon-box">
-                                    <img src="assets2/images/icon-mail.svg" alt="" />
-                                </div>
-                                <!-- Icon Box End -->
-
-                                <!-- Contact Info Content Start -->
-                                <div class="contact-info-content">
-                                    <p>Send us a message</p>
-                                    <h6>info@aiabigbrotherssocialclub.com</h6>
-                                </div>
-                                <!-- Contact Info Content End -->
-                            </div>
-                            <!-- Contact Info Item End -->
-
-                            <!-- Contact Info Item Start -->
-                            <div class="contact-info-item wow fadeInUp" data-wow-delay="0.75s">
-                                <!-- Icon Box Start -->
-                                <div class="icon-box">
-                                    <img src="assets2/images/icon-location.svg" alt="" />
-                                </div>
-                                <!-- Icon Box End -->
-
-                                <!-- Contact Info Content Start -->
-                                <div class="contact-info-content">
-                                    <p>Visit our location</p>
-                                    <h3>
-                                        No 5, Ogunmokun street off Olosha bus-stop Mushin, Lagos.
-                                    </h3>
-                                </div>
-                                <!-- Contact Info Content End -->
-                            </div>
-                            <!-- Contact Info Item End -->
+                            <p class="wow fadeInUp">Join us for the Christmas Eve Candlelight Service, a Avenix evening
+                                of carols, scripture readings, and heartfelt worship. Illuminate the night with
+                                candlelight as we celebrate the birth of Jesus Christ. Bring your family and friends to
+                                share in the warmth, joy, and peace of this special tradition.</p>
+                            <p class="wow fadeInUp" data-wow-delay="0.5s"><b>Date Posted:</b> 19/12/2025</p>
                         </div>
-                        <!-- Contact Information List End -->
-                    </div>
-                    <!-- Contact Information End -->
-                </div>
-
-                <div class="col-lg-6">
-                    <!-- Contact Form Start -->
-                    <div class="contact-us-form wow fadeInUp" data-wow-delay="0.25s">
-                        <form id="contactForm" action="#" method="POST" data-toggle="validator"
-                            class="wow fadeInUp" data-wow-delay="0.5s">
-                            <div class="row">
-                                <div class="form-group col-md-6 mb-4">
-                                    <input type="text" name="name" class="form-control" id="fname"
-                                        placeholder="First Name" required />
-                                    <div class="help-block with-errors"></div>
-                                </div>
-
-                                <div class="form-group col-md-6 mb-4">
-                                    <input type="text" name="name" class="form-control" id="lname"
-                                        placeholder="Last Name" required />
-                                    <div class="help-block with-errors"></div>
-                                </div>
-
-                                <div class="form-group col-md-6 mb-4">
-                                    <input type="email" name="email" class="form-control" id="email"
-                                        placeholder="Email Address" required />
-                                    <div class="help-block with-errors"></div>
-                                </div>
-
-                                <div class="form-group col-md-6 mb-4">
-                                    <input type="text" name="phone" class="form-control" id="phone"
-                                        placeholder="Phone No" required />
-                                    <div class="help-block with-errors"></div>
-                                </div>
-
-                                <div class="form-group col-md-12 mb-4">
-                                    <textarea name="msg" class="form-control" id="msg" rows="5" placeholder="Message" required></textarea>
-                                    <div class="help-block with-errors"></div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="contact-form-btn">
-                                        <button type="submit" class="btn-default">
-                                            submit message
-                                        </button>
-                                        <div id="msgSubmit" class="h3 hidden"></div>
+                        <div class="post-tag-links">
+                            <div class="row align-items-center">
+                                <div class="col-lg-8">
+                                    <div class="post-tags wow fadeInUp" data-wow-delay="0.5s">
+                                        <span class="tag-links">
+                                            Follow US
+                                            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
-                    <!-- Contact Form End -->
                 </div>
             </div>
         </div>
     </div>
-    <!-- Page Contact Us End -->
+    <!-- Page Single Post End -->
+
 
     <!-- CTA Box Section Start -->
     <div class="cta-box">

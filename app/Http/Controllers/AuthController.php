@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 // use App\Models\Admins;
 
+use App\Models\Blog;
 use App\Models\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +17,8 @@ class AuthController extends Controller
         $totalMembers = Member::count();
         $approved = Member::where('status', 'Approved')->count();
         $pending = Member::where('status', 'pending')->count();
-        return view('pages.home', compact('totalMembers', 'approved', 'pending'));
+        $blog = Blog::count();
+        return view('pages.home', compact('totalMembers', 'approved', 'pending', 'blog'));
     }
     public function createLogin(){
         return view("pages.login");

@@ -10,12 +10,11 @@
     <!-- Page Title -->
     <title>AIA Big Brothers Social Club</title>
     <!-- Favicon Icon -->
-    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets3/images/favicon.png') }}" />
     <!-- Google Fonts Css-->
     <link rel="preconnect" href="https://fonts.googleapis.com/" />
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
-    <link
-        href="https://cdn.jsdelivr.net/fontsource/fonts/fira-code:vf@latest/latin-wght-normal.woff2"
+    <link href="https://cdn.jsdelivr.net/fontsource/fonts/fira-code:vf@latest/latin-wght-normal.woff2"
         rel="stylesheet" />
     <!-- Bootstrap Css -->
     <link href="assets2/css/bootstrap.min.css" rel="stylesheet" media="screen" />
@@ -340,7 +339,7 @@
                                 <div class="swiper-slide">
                                     <div class="core-value-slider-img">
                                         <figure class="image-anime">
-                                            <img src="assets2/images/gb3.png" alt="" />
+                                            <img src="assets2/images/gb4.png" alt="" />
                                         </figure>
                                     </div>
                                 </div>
@@ -350,7 +349,7 @@
                                 <div class="swiper-slide">
                                     <div class="core-value-slider-img">
                                         <figure class="image-anime">
-                                            <img src="assets2/images/gb6.png" alt="" />
+                                            <img src="assets2/images/gb4.png" alt="" />
                                         </figure>
                                     </div>
                                 </div>
@@ -360,7 +359,7 @@
                                 <div class="swiper-slide">
                                     <div class="core-value-slider-img">
                                         <figure class="image-anime">
-                                            <img src="assets2/images/gb3.png" alt="" />
+                                            <img src="assets2/images/gb4.png" alt="" />
                                         </figure>
                                     </div>
                                 </div>

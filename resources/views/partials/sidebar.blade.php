@@ -20,7 +20,7 @@
                     <span><i class="ri-arrow-left-s-line arrow-icon"></i></span>
                 </a>
                 <ul class="sidebar-menu-dropdown">
-                    <li><a href="{{ route('officials.index') }}">Officials</a></li>
+                    <li><a href="{{ route('officials.index') }}">Manage Officials</a></li>
                 </ul>
             </li>
             <li class="sidebar-menu has-dropdown">
@@ -30,7 +30,7 @@
                     <span><i class="ri-arrow-left-s-line arrow-icon"></i></span>
                 </a>
                 <ul class="sidebar-menu-dropdown">
-                    <li><a href="{{ route('members.index') }}">Members</a></li>
+                    <li><a href="{{ route('members.index') }}">Manage Members</a></li>
                 </ul>
             </li>
             <li class="sidebar-menu has-dropdown">
@@ -40,7 +40,7 @@
                     <span><i class="ri-arrow-left-s-line arrow-icon"></i></span>
                 </a>
                 <ul class="sidebar-menu-dropdown">
-                    <li><a href="{{ route('blogs.index') }}">New Post</a></li>
+                    <li><a href="{{ route('blogs.index') }}">Manage Blog</a></li>
                 </ul>
             </li>
             <li class="sidebar-menu">

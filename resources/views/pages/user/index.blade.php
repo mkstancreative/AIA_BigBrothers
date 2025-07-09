@@ -10,7 +10,7 @@
     <!-- Page Title -->
     <title>AIA Big Brothers Social Club</title>
     <!-- Favicon Icon -->
-    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets2/images/favicon.png') }}" />
     <!-- Google Fonts Css-->
     <link rel="preconnect" href="https://fonts.googleapis.com/" />
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
@@ -125,13 +125,13 @@
                     <div class="about-image">
                         <div class="about-img-1">
                             <figure class="image-anime reveal">
-                                <img src="assets2/images/gb8.png" alt="" />
+                                <img src="assets2/images/gb1.png" alt="" />
                             </figure>
                         </div>
 
                         <div class="about-img-2">
                             <figure class="image-anime reveal">
-                                <img src="assets2/images/gb7.png" alt="" />
+                                <img src="assets2/images/gb2.png" alt="" />
                             </figure>
                         </div>
                     </div>
@@ -533,7 +533,7 @@
                         <!-- Sermons Image Start -->
                         <div class="sermons-image">
                             <figure>
-                                <a href="#" class="image-anime" data-cursor-text="View">
+                                <a href="{{ route('blogs.show') }}" class="image-anime" data-cursor-text="View">
                                     <img src="assets2/images/gb4.png" alt="" />
                                 </a>
                             </figure>
@@ -656,6 +656,11 @@
                     </div>
                     <!-- Sermons Item End -->
                 </div>
+
+                {{-- <div class="col-lg-4 col-md-6">
+                    <h3>Coming Soon</h3>
+                </div> --}}
+
             </div>
         </div>
     </div>

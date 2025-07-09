@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Mail\MemberActivated;
+use App\Mail\MemberDeactivated;
 use App\Mail\MemberRegistered;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
+use App\Mail\MemberRejected;
 
 use App\Models\Member;
 use App\Models\Official;
@@ -16,8 +16,9 @@ use Illuminate\Support\Facades\Mail;
 class MemberController extends Controller
 {
     public function indexMember(){
+        $member = Member::latest()->get();
         return view('pages.members', [
-            'members' => Member::all(),
+            'members' => $member,
         ]);
     }
 
@@ -94,7 +95,7 @@ class MemberController extends Controller
 
     public function updateMember(Request $request, $id)
     {
-        $member = Member::findOrFail($id);
+        $member = Member::findOrFail($id);  
 
         $validated = $request->validate([
             'email' => 'required|email|unique:members,email,' . $member->id,
@@ -125,14 +126,37 @@ class MemberController extends Controller
             'date_approved' => 'nullable|string',
         ]);
 
-        // Update the member
+        
         $member->update($validated);
 
-        if ($member->status === 'Approved') {
-            Mail::to($member->email)->send(new MemberActivated($member));
+        switch ($member->status) {
+            case 'Approved':
+                Mail::to($member->email)->send(new MemberActivated($member));
+                $message = 'Member approved and email sent.';
+                break;
+    
+            case 'Rejected':
+                Mail::to($member->email)->send(new MemberRejected($member));
+                $message = 'Member rejected and email sent.';
+                break;
+    
+            case 'Deactivated':
+                Mail::to($member->email)->send(new MemberDeactivated($member));
+                $message = 'Member deactivated and email sent.';
+                break;
+    
+            default:
+                $message = 'Member updated without status change.';
+                break;
         }
 
-        return back()->with('success', 'Member updated and email sent (if activated).');
+        // return response()->json([
+        //     'status' => true,
+        //     'message' => $message,
+        //     'data' => $member
+        // ]);
+
+        return redirect()->back()->with('success', $message);
     }
 
 
@@ -140,13 +164,7 @@ class MemberController extends Controller
         $member = Member::findOrfail($id);
 
         $member->delete();
-
-        return response()->json([
-            'status' => true,
-            'message' => 'Member Deleted Successfully',
-            'data'  => $member
-        ]);
-
+        return back();
     }
 
    

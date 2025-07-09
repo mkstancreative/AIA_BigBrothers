@@ -45,7 +45,7 @@
                 </ul>
                 <div class="tab-content bg-white" id="pills-tabContent">
                     <form class="tab-content border border-top-0 p-4" action="{{ route('members.update', $member->id) }}"
-                        method="post">
+                        method="post" id="myForm">
                         @csrf
                         @method('put')
                         <div class="tab-pane fade show active" id="personal" role="tabpanel">
@@ -552,18 +552,21 @@
                                                 Pending</option>
                                             <option value="Rejected"
                                                 {{ $member->status === 'Rejected' ? 'selected' : '' }}>Rejected</option>
-                                            <option value="Deferred"
-                                                {{ $member->status === 'Deferred' ? 'selected' : '' }}>Deferred</option>
                                             <option value="Approved"
                                                 {{ $member->status === 'Approved' ? 'selected' : '' }}>Approved</option>
+                                            <option value="Deactivated"
+                                                {{ $member->status === 'Deactivated' ? 'selected' : '' }}>Deactivated
+                                            </option>
                                         </select>
                                     </div>
                                     <div class="col-md-4">
                                         <label for="" class="form-label">Approved By</label>
-                                        <select name="official_name" id="" class="form-control" value="">
-                                            <option value="" hidden>Official Name</option>
+                                        <select name="official_name" id="" class="form-control">
+                                            <option hidden selected>
+                                                Select Official
+                                            </option>
                                             @foreach ($officials as $official)
-                                                <option value="{{ $official->firstname . ' ' . $official->lastname }}">
+                                                <option value="{{ $official->id }}">
                                                     {{ $official->firstname . ' ' . $official->lastname }}
                                                 </option>
                                             @endforeach
@@ -578,7 +581,7 @@
                             </div>
                         </div>
                         <div class="col-md-2 mt-4 w-20 border">
-                            <button class="btn btn-warning w-100" type="submit">
+                            <button class="btn btn-warning w-100" type="submit" id="submitBtn">
                                 Update Member
                             </button>
                         </div>
@@ -587,4 +590,17 @@
             </div>
         </div>
     </div>
+    <script src="{{ asset('assets/Js/operations.js') }}"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            document.getElementById("myForm").addEventListener("submit", function() {
+                const btn = document.getElementById("submitBtn");
+                btn.disabled = true;
+                btn.innerHTML = 'Please wait... <span class="spinner-border spinner-border-sm"></span>';
+            });
+
+        })
+    </script>
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\MemberRegistered;
+use App\Models\Blog;
 use App\Models\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -12,7 +13,8 @@ use Illuminate\Support\Facades\Storage;
 class UserController extends Controller
 {
     public function index(){
-       return view('pages.user.index');
+        $Blog = Blog::latest()->take(3)->get();
+       return view('pages.user.index', ['Blog' => $Blog]);
     }
 
     public function indexAbout(){

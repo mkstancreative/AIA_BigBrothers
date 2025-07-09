@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class OfficialController extends Controller
 {
     public function indexOfficials(){
-        $officials = Official::all();
+        $officials = Official::latest()->get();
         return view('pages.officials', ['officials' => $officials]);
     }
 
@@ -20,14 +20,9 @@ class OfficialController extends Controller
             'positions' => 'required|string|unique:officials,positions',
         ]);
 
-        $official = Official::create($validated);
-
-        return response()->json([
-            'status' => true,
-            'message' => 'Official Create Successfully',
-            'data' => $official
-        ]);
-
+        Official::create($validated);
+        
+        return back()->with('success', 'Official Created Successfully');
     }
 
     public function destroyOfficials($id)
@@ -35,10 +30,7 @@ class OfficialController extends Controller
     $official = Official::findOrFail($id);
     $official->delete();
 
-    return response()->json([
-        'status' => true,
-        'message' => 'Official deleted successfully'
-    ]);
+    return back();
 }
 
 }

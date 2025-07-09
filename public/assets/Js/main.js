@@ -7,8 +7,8 @@ menuIcon.onclick = function () {
   mainContent.classList.toggle('active');
 };
 
-const dropdownToggle = document.querySelectorAll(".dropdown-toggle");
 
+const dropdownToggle = document.querySelectorAll(".dropdown-toggle");
 dropdownToggle.forEach((toggle) => {
   toggle.addEventListener("click", (e) => {
     e.preventDefault();

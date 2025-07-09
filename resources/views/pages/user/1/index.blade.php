@@ -3,10 +3,10 @@
 
 <head>
     <meta charset="utf-8" />
-    <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png" />
-    <link rel="icon" type="image/png" href="assets/img/favicon.png" />
+    <link rel="icon" type="image/png" href="{{ asset('assets3/img/favicon.png') }}" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>AIA Big Brothers Social Club</title>
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
 
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
@@ -19,8 +19,8 @@
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.css" rel="stylesheet" />
 
     <!-- CSS Files -->
-    <link href="{{asset('assets3/css/bootstrap.min.css')}}" rel="stylesheet" />
-    <link href="{{asset('assets3/css/gsdk-bootstrap-wizard.css')}}" rel="stylesheet" />
+    <link href="{{ asset('assets3/css/bootstrap.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets3/css/gsdk-bootstrap-wizard.css') }}" rel="stylesheet" />
 </head>
 
 <body>
@@ -56,27 +56,20 @@
                                     <div class="tab-pane" id="about">
                                         <div class="row">
                                             <h4 class="info-text">Basic Information</h4>
-                                            <div class="col-sm-4 col-sm-offset-1">
-                                                <div class="picture-container">
-                                                    <div class="picture">
-                                                        <img src="assets3/img/default-avatar.png" class="picture-src"
-                                                            id="wizardPicturePreview" title="" />
-                                                        <input type="file" id="wizard-picture" name="profile_pics"
-                                                            required />
+                                            <div class="row col-sm-10 col-sm-offset-1">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>First Name </label>
+                                                        <input name="firstname" type="text" class="form-control"
+                                                            placeholder="Andrew..." />
                                                     </div>
-                                                    <h6>Choose Picture</h6>
                                                 </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <label>First Name </label>
-                                                    <input name="firstname" type="text" class="form-control"
-                                                        placeholder="Andrew..." />
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Last Name</label>
-                                                    <input name="lastname" type="text" class="form-control"
-                                                        placeholder="Last Name..." required />
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Last Name</label>
+                                                        <input name="lastname" type="text" class="form-control"
+                                                            placeholder="Last Name..." required />
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="row col-sm-10 col-sm-offset-1">
@@ -800,12 +793,29 @@
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
         $(document).ready(function() {
             $("#memberForm").on("submit", function(e) {
                 e.preventDefault();
 
+                const form = $(this);
+                const submitBtn = form.find('button[type="submit"]');
+
                 let formData = new FormData(this);
+
+                // Disable the submit button to prevent resubmission
+                submitBtn.prop("disabled", true);
+
+                Swal.fire({
+                    title: 'Please wait...',
+                    html: 'Submitting your request...',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
 
                 $.ajax({
                     url: "/become-a-member",
@@ -817,45 +827,77 @@
                         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
                     },
                     success: function(response) {
+                        submitBtn.prop("disabled", false);
+
                         if (response && response.status) {
-                            toastr.success(
-                                response.message + " (ID: " + response.member_id + ")"
-                            );
-                            $("#memberForm")[0].reset();
-                            window.location.reload();
+                            Swal.fire({
+                                icon: "success",
+                                title: "Success",
+                                text: response.message,
+                                timer: 3000,
+                                showConfirmButton: false
+                            });
+
+                            form[0].reset();
+
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 3200);
                         } else {
-                            toastr.warning("Unexpected response from server.");
+                            Swal.fire({
+                                icon: "warning",
+                                title: "Unexpected",
+                                text: "Unexpected response from server.",
+                                confirmButtonColor: "#f0ad4e",
+                            });
                         }
                     },
                     error: function(xhr) {
-                        if (
-                            xhr.status === 422 &&
-                            xhr.responseJSON &&
-                            xhr.responseJSON.errors
-                        ) {
-                            // Laravel validation errors
-                            $.each(xhr.responseJSON.errors, function(key, value) {
-                                toastr.error(value[0]);
+                        submitBtn.prop("disabled", false);
+
+                        Swal.close(); // Close loading state
+
+                        if (xhr.status === 422 && xhr.responseJSON?.errors) {
+                            let errors = Object.values(xhr.responseJSON.errors)
+                                .map((e) => `<li>${e[0]}</li>`)
+                                .join("");
+
+                            Swal.fire({
+                                icon: "error",
+                                title: "Validation Error",
+                                html: `<ul style="text-align: left;">${errors}</ul>`,
+                                confirmButtonColor: "#d33",
                             });
-                        } else if (xhr.responseJSON && xhr.responseJSON.message) {
-                            toastr.error(xhr.responseJSON.message);
+                        } else if (xhr.responseJSON?.message) {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error",
+                                text: xhr.responseJSON.message,
+                                confirmButtonColor: "#d33",
+                            });
                         } else {
-                            toastr.error("An unknown error occurred.");
+                            Swal.fire({
+                                icon: "error",
+                                title: "Oops...",
+                                text: "An unknown error occurred.",
+                                confirmButtonColor: "#d33",
+                            });
                         }
                     },
                 });
             });
         });
     </script>
+    <!--   Core JS Files   -->
+    <script src="{{ asset('assets3/js/jquery-2.2.4.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets3/js/bootstrap.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets3/js/jquery.bootstrap.wizard.js') }}" type="text/javascript"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script src="{{ asset('assets3/js/gsdk-bootstrap-wizard.js') }}"></script>
+    <script src="{{ asset('assets3/js/jquery.validate.min.js') }}"></script>
 </body>
 
-<!--   Core JS Files   -->
-<script src="{{asset('assets3/js/jquery-2.2.4.min.js')}}" type="text/javascript"></script>
-<script src="{{asset('assets3/js/bootstrap.min.js')}}" type="text/javascript"></script>
-<script src="{{asset('assets3/js/jquery.bootstrap.wizard.js')}}" type="text/javascript"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-<script src="{{asset('assets3/js/gsdk-bootstrap-wizard.js')}}"></script>
-<script src="{{asset('assets3/js/jquery.validate.min.js')}}"></script>
 
 </html>

@@ -25,7 +25,7 @@
                 tabindex="0">
                 <div class="col-md-12 bg-white p-3">
                     <h5 class="pb-3">Create New Official</h5>
-                    <form id="createOfficial" method="post" class="col-md-6">
+                    <form action="{{ route('officials.store') }}" method="post" class="col-md-6">
                         @csrf
                         <div class="col-md-12 mt-4">
                             <label class="form-label">FirstName:</label>
@@ -68,7 +68,7 @@
                 tabindex="0">
                 <div class="col-md-12 bg-white p-3">
                     <h5 class="pb-3">Other Officials</h5>
-                    <table class="table table-striped" id="tableContainer">
+                    <table class="table table-striped overflow-auto" id="tableContainer">
                         <thead>
                             <tr>
                                 <th>FirstName</th>
@@ -96,7 +96,6 @@
                                 </tr>
                             @endforelse
                         </tbody>
-
                     </table>
                 </div>
             </div>
@@ -106,26 +105,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
 
-            handleFormSubmit('#createOfficial', '/officials', 'POST', 'Official Created Successfully', function(
-                newData) {
-                const tbody = document.querySelector('#tableBody');
-                const row = document.createElement('tr');
-                row.id = `tableRow-${newData.id}`;
-
-                row.innerHTML = `
-                            <td>${newData.firstname}</td>
-                            <td>${newData.lastname}</td>
-                            <td>${newData.positions}</td>
-                            <td>
-                                <span class="badge bg-danger fs-6 delete-btn" data-id="${newData.id}">
-                                    <i class="ri-delete-bin-line"></i>
-                                </span>
-                            </td>
-                        `;
-                tbody.appendChild(row);
-            });
-            handleDeleteButtons('#tableBody', '/officials', 'tableRow-', 'Officials Deleted');
+            handleDeleteButtons('#tableBody', '/officials', 'tableRow-', 'Official Deleted Successfully');
         });
     </script>
-
 @endsection
