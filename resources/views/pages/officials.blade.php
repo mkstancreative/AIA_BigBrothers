@@ -105,7 +105,8 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
 
-            handleDeleteButtons('#tableBody', '/officials', 'tableRow-', 'Official Deleted Successfully');
+            handleDeleteButtons('#tableBody', '/officials', 'tableRow-', 'Official Deleted Successfully', () =>
+                toggleNoRecordsRow('#tableContainer'));
         });
     </script>
 @endsection

@@ -26,6 +26,7 @@
                     <form action="{{ route('blogs.update', $blog->id) }}" method="POST" enctype="multipart/form-data"
                         class="col-md-6">
                         @csrf
+                        @method('put')
                         <div class="form-group">
                             <label for="" class="form-label">Title</label>
                             <input type="text" class="form-control" name="title" value="{{ $blog->title }}">

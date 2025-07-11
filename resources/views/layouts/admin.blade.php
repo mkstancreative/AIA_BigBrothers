@@ -13,7 +13,7 @@
     {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" /> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
-    <link rel="shortcut icon" href="assets/images/logos/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="{{ asset('assets/images/logos/favicon.png') }}" />
 
 </head>
 

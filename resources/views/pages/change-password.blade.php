@@ -4,7 +4,8 @@
 
 @section('content')
     <div class="col-md-6 bg-white p-3 rounded">
-        <form action="{{ route('change-password.store') }}">
+        <form action="{{ route('change-password.store') }}" method="post">
+            @csrf
             <div class="col-md-12">
                 <label class="form-label">Old Password</label>
                 <div class="input-group">

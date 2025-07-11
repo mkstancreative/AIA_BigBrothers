@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 // use App\Models\Admins;
 
+use App\Models\Admins;
 use App\Models\Blog;
 use App\Models\Member;
 use Illuminate\Http\Request;
@@ -47,33 +48,31 @@ class AuthController extends Controller
     public function createChangePassword(){
         return view("pages.change-password");
     }
-
-    // public function storeChangePassword(Request $request)
-    // {
-    //     $request->validate([
-    //         'old_password' => "required|string",
-    //         'new_password' => 'required|string|min:7|confirmed',
-    //         'new_password_confirm' => 'required|string',
-    //     ]);
-
-    //     if($request->new_password !== $request->new_password_confirm){
-    //         return back()->withErrors('new_password', 'New Password Does not Match');
-    //     };
+    public function storeChangePassword(Request $request)
+    {
+        $request->validate([
+            'old_password' => 'required|string',
+            'new_password' => 'required|string|min:7|confirmed',
+        ]);
     
-    //     $admin = Auth::guard('admin')->user();
+        $admin = Auth::guard('admin')->user();
     
-    //     if (!Hash::check($request->old_password, $admin->password)) {
-    //         return back()->withErrors([
-    //             'old_password' => "Old Password is incorrect",
-    //         ]);
-    //     }
+       
+        if (!($admin instanceof \App\Models\Admins)) {
+            return back()->withErrors(['auth' => 'Invalid admin instance.']);
+        }
     
-    //     $admin->update([
-    //         'password' => Hash::make($request->new_password),
-    //     ]);
+        if (!Hash::check($request->old_password, $admin->password)) {
+            return back()->withErrors(['old_password' => 'Old password is incorrect.']);
+        }
     
-    //     return back()->with('success', 'Password changed successfully.');
-    // }
+        $admin->password = Hash::make($request->new_password);
+        $admin->save();
+    
+        return back()->with('success', 'Password changed successfully.');
+    }
+    
+    
 
 
     public function logout(Request $request){

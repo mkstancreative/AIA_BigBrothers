@@ -12,9 +12,10 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-    public function index(){
-        $Blog = Blog::latest()->take(3)->get();
-       return view('pages.user.index', ['Blog' => $Blog]);
+    public function index()
+    {
+        $blogs = Blog::latest()->take(3)->get(); 
+        return view('pages.user.index', compact('blogs'));
     }
 
     public function indexAbout(){
@@ -90,6 +91,11 @@ class UserController extends Controller
                 'error' => $e->getMessage()
             ], 500);
         }
+    }
+
+    public function showBlog($id){
+        $Blog = Blog::findOrFail($id);
+        return view('pages.user.blog-details', ['blog' => $Blog]);
     }
     
 }

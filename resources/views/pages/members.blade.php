@@ -56,7 +56,7 @@
                                     </td>
                                 </tr>
                             @empty
-                                <tr class="no-record">
+                                <tr class="no-records-row">
                                     <td colspan="7">No Records Found</td>
                                 </tr>
                             @endforelse
@@ -1133,11 +1133,15 @@
                             </td>
                         `;
                 tbody.appendChild(row);
+
+                const emptyRow = document.querySelector('#no-records-row');
+                if (emptyRow) emptyRow.remove();
             });
 
 
 
-            handleDeleteButtons('#tableBody', '/members', 'tableRow-', 'Member Deleted Successfully');
+            handleDeleteButtons('#tableBody', '/members', 'tableRow-', 'Member Deleted Successfully', () =>
+                toggleNoRecordsRow('#tableContainer'));
         });
     </script>
 

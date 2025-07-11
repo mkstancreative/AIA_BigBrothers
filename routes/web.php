@@ -18,13 +18,14 @@ Route::middleware(['guest:admin'])->group(function(){
     });
     Route::controller(UserController::class)->name('user.')
     ->group(function(){
+        Route::get('/', 'index')->name('index');
         Route::get('/index', 'index')->name('index');
         Route::get('/about', 'indexAbout')->name('about');
         Route::get('/contact', 'indexContact')->name('contact');
         Route::get('/register', 'indexRegister')->name('register');
         Route::get('/become-a-member', 'createRegister')->name('create');
         Route::post('/become-a-member', 'storeRegister')->name('store');
-        Route::get('/blog/{id}', 'showBlog')->name('show');
+        Route::get('/blog-details/{id}', 'showBlog')->name('show');
     });
 
     
@@ -37,7 +38,7 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::post('/logout', 'logout')->name('logout');
         Route::get('/home', 'createHome')->name('dashboard');
         Route::get('/change-password', 'createChangePassword')->name('change-password');
-        Route::post('/change-password', 'storeChangePassword')->name('change.store');
+        Route::post('/change-password', 'storeChangePassword')->name('change-password.store');
     });
 
     Route::controller(MemberController::class)

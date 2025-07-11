@@ -28,7 +28,7 @@
                         <thead>
                             <tr>
                                 <th>Title</th>
-                                <th>Create At</th>
+                                <th>Created At</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -87,7 +87,8 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
 
-            handleDeleteButtons('#tableBody', '/blogs', 'tableRow-', 'Blog Deleted Successfully');
+            handleDeleteButtons('#tableBody', '/blogs', 'tableRow-', 'Blog Deleted Successfully', () =>
+                toggleNoRecordsRow('#tableContainer'));
         });
     </script>
 @endsection
