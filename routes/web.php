@@ -18,7 +18,7 @@ Route::middleware(['guest:admin'])->group(function(){
     });
     Route::controller(UserController::class)->name('user.')
     ->group(function(){
-        Route::get('/', 'index')->name('index');
+        Route::get('/', 'index')->name('home');
         Route::get('/index', 'index')->name('index');
         Route::get('/about', 'indexAbout')->name('about');
         Route::get('/contact', 'indexContact')->name('contact');
