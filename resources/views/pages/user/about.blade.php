@@ -147,13 +147,12 @@
                         <div class="accordion-item wow fadeInUp" data-wow-delay="0.5s">
                             <h2 class="accordion-header" id="headingThree">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseThree" aria-expanded="false"
-                                    aria-controls="collapseThree">
+                                    data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                                     Community Support & Humanitarian Projects
                                 </button>
                             </h2>
-                            <div id="collapseThree" class="accordion-collapse collapse"
-                                aria-labelledby="headingThree" data-bs-parent="#accordion">
+                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                                data-bs-parent="#accordion">
                                 <div class="accordion-body">
                                     <p>
                                         • Implement poverty alleviation programs for widows and
@@ -168,8 +167,7 @@
                         <div class="accordion-item wow fadeInUp" data-wow-delay="0.75s">
                             <h2 class="accordion-header" id="headingfour">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapsefour" aria-expanded="false"
-                                    aria-controls="collapsefour">
+                                    data-bs-target="#collapsefour" aria-expanded="false" aria-controls="collapsefour">
                                     Promote AIA Culture & Unity
                                 </button>
                             </h2>
@@ -665,38 +663,8 @@
 
     <x-user.footer />
 
-    <!-- Jquery Library File -->
-    <script src="assets2/js/jquery-3.7.1.min.js"></script>
-    <!-- Bootstrap js file -->
-    <script src="assets2/js/bootstrap.min.js"></script>
-    <!-- Validator js file -->
-    <script src="assets2/js/validator.min.js"></script>
-    <!-- SlickNav js file -->
-    <script src="assets2/js/jquery.slicknav.js"></script>
-    <!-- Swiper js file -->
-    <script src="assets2/js/swiper-bundle.min.js"></script>
-    <!-- Counter js file -->
-    <script src="assets2/js/jquery.waypoints.min.js"></script>
-    <script src="assets2/js/jquery.counterup.min.js"></script>
-    <!-- Magnific js file -->
-    <script src="assets2/js/jquery.magnific-popup.min.js"></script>
-    <!-- SmoothScroll -->
-    <script src="assets2/js/SmoothScroll.js"></script>
-    <!-- Parallax js -->
-    <script src="assets2/js/parallaxie.js"></script>
-    <!-- MagicCursor js file -->
-    <script src="assets2/js/gsap.min.js"></script>
-    <script src="assets2/js/magiccursor.js"></script>
-    <!-- Text Effect js file -->
-    <script src="assets2/js/SplitText.js"></script>
-    <script src="assets2/js/ScrollTrigger.min.js"></script>
-    <!-- YTPlayer js File -->
-    <script src="assets2/js/jquery.mb.YTPlayer.min.js"></script>
-    <!-- Audio js File -->
-    <script src="assets2/js/plyr.js"></script>
-    <!-- Wow js file -->
-    <script src="assets2/js/wow.js"></script>
-    <!-- Main Custom js file -->
-    <script src="assets2/js/function.js"></script>
+    <x-user.scripts />
+   
 </body>
+
 </html>
